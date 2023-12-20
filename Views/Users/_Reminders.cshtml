@@ -1,0 +1,75 @@
+﻿@model StudyGroup.ViewModels.UserIndexViewModel
+
+<div class="p-1 mb-2">
+    <div class="float-right">
+        <a class="btn btn-info mb-2" asp-controller="Reminder" asp-action="Create"><i class="material-icons" style="line-height:inherit">add_alarm</i></a>
+    </div>
+    <div class="">
+        @if (Model.Reminders.Count() > 0)
+        {
+            <table class="table table-bordered table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Date Created</th>
+                        <th>Reminder Date</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var reminder in Model.Reminders)
+                    {
+                    <tr>
+                        <td>@reminder.Subject</td>
+                        <td>@reminder.DateCreated</td>
+                        <td>@reminder.TimeToBeSent</td>
+                        @if (reminder.TimeToBeSent >= DateTime.Now)
+                        {
+                            <td><a class="btn btn-light" asp-action="Edit" asp-controller="Reminder" asp-route-id="@reminder.Id">Edit</a></td>
+
+                        }
+                        else
+                        {
+                            <td> <p class="btn btn-dark disabled"> Sent</p></td>
+                        }
+                        @{ 
+                            var DeleteId = "DELETE" + reminder.Id;
+                        }
+                        <td><a class="btn btn-danger text-light" data-toggle="modal" data-target="#@DeleteId">Delete</a></td>
+
+                        <div class="modal fade" id="@DeleteId" data-backdrop="static" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header text-center">
+                                        <h5 class="modal-title">Are You Sure You want to Delete this Reminder?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        If you Delete this Reminder, It will be completely gone and will no longer send
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Don't Delete</button>
+                                        <a class="btn btn-danger text-light" asp-action="Delete" asp-controller="Reminder" asp-route-id="@reminder.Id">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+    <div class="container mt-5 text-center">
+        <h4>
+            It looks like you haven't made any Reminders Yet. Click the Plus Button above to Create one!
+        </h4>
+    </div>        
+        }
+
+    </div>
+</div>

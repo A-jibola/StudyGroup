@@ -1,0 +1,71 @@
+﻿@model StudyGroup.ViewModels.DocumentViewModel
+
+@{
+    ViewData["Title"] = "Save Document";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var credit = "";
+    var button = "";
+}
+
+
+<div class="row">
+    <partial name="_GroupNav" />
+    @if (Model.Document != null && Model.Document.Id != 0)
+    {
+        credit = "Edit This File";
+        button = "Edit";
+    }
+    else
+    {
+        credit = "Send a New File";
+        button = "Send";
+    }
+
+    <div class="offset-md-2 col-md-4">
+        <h2 class="text-center">@credit</h2>
+        @if (Model.ErrorMessage != null)
+        {
+            <p class="text-center text-danger">@Model.ErrorMessage</p>
+        }
+    <form asp-action="Save" enctype="multipart/form-data" method="post">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Document.Name" class="control-label"></label>
+            <input asp-for="Document.Name" required class="form-control" />
+            <span asp-validation-for="Document.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Document.Description" class="control-label"></label>
+            <textarea asp-for="Document.Description" required class="form-control"></textarea>
+            <span asp-validation-for="Document.Description" class="text-danger"></span>
+        </div>
+        @if (Model.Document != null)
+        {
+            <a class="btn btn-outline-info btn-light mb-3" data-toggle="collapse" data-target="#DocFile">Change The Document Sent</a>
+
+            <div class="form-group collapse" id="DocFile">
+                <label class="control-label">File</label>
+                <input type="file" name="GroupFile" class="form-control" />
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label class="control-label">File</label>
+                <input type="file" name="GroupFile" class="form-control" />
+            </div>
+        }
+
+        <input asp-for="GroupId" hidden />
+        <input asp-for="Group.Id" hidden />
+        <input asp-for="Document.Id" hidden />
+        <div class="form-group text-center">
+            <input type="submit" value="@button" class="btn btn-info"/>
+        </div>
+    </form>
+    </div>
+</div>
+
+
+

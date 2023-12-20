@@ -1,0 +1,53 @@
+﻿
+<div class="col-md-2 p-4 col-sm-3 navbar-expand-lg navbar-light mb-0 border-right border-white">
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+        <div class="">
+           
+            <a class="d-block p-3 nav-link hovhov font-weight-bolder" asp-controller="Group" asp-action="ViewGroup" asp-route-id="@Model.Group.Name">
+                <span class="text-center font-weight-bold text-dark">@Model.Group.Name</span>
+            </a>
+            @if (Model.CurrentUser == Model.Group.GroupAdmin)
+            {
+                <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" asp-controller="Group" asp-action="Create" asp-route-name="@Model.Group.Name"><i class="fas fa-edit"></i> Edit Group</a>
+                <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" style="cursor:pointer;" data-toggle="collapse" data-target="#reminder"> <i class="material-icons">alarm</i> Reminder</a>
+
+                <div class="collapse" id="reminder">
+                    <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" asp-controller="Reminder" asp-action="Create" asp-route-name="@Model.Group.Name"><i class="material-icons">add_alarm</i> New Reminder</a>
+                    <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" asp-controller="Reminder" asp-action="ViewAll" asp-route-name="@Model.Group.Name"><i class="material-icons">alarm_on</i> All Reminders</a>
+                </div>
+            }
+
+            <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" style="cursor:pointer;" data-toggle="collapse" data-target="#document"><i class="fas fa-folder"></i> Document</a>
+            <div class="collapse" id="document">
+                <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" asp-controller="Document" asp-action="Create" asp-route-id="@Model.Group.Id"><i class="fas fa-file-upload"></i> Send File</a>
+                <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" asp-controller="Document" asp-action="ViewAll" asp-route-id="@Model.Group.Id"><i class="fas fa-file"></i> All Files</a>
+            </div>
+            <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" asp-controller="Text" asp-action="Index" asp-route-name="@Model.Group.Name"><i class="fas fa-comment"></i> Text</a>
+
+            <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" style="cursor:pointer;" data-toggle="collapse" data-target="#call"><i class="fas fa-phone"></i> Call</a>
+
+            <div class="collapse" id="call">
+                <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" asp-controller="Call" asp-action="Video" asp-route-name="@Model.Group.Name"><i class="fas fa-video"></i> Video Call</a>
+                <a class="d-block p-3 hovhov nav-link font-weight-bold text-dark" asp-controller="Call" asp-action="Voice" asp-route-name="@Model.Group.Name"><i class="fas fa-phone"></i> Voice Call</a>
+            </div>
+        </div>
+        </div> 
+   
+
+</div>
+
+
+<script>
+    var hovhovs = document.getElementsByClassName("hovhov");
+    for (var i = 0; i < hovhovs.length; i++) {
+        hovhovs[i].addEventListener("click", () => {
+            event.target.classList.toggle("clicked");
+        });
+    }
+    //document.getElementsByClassName("hovhov").addEventListener("click", () => {
+    //    alert("hey")
+    //})
+</script>

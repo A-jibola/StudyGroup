@@ -1,0 +1,140 @@
+﻿@model StudyGroup.ViewModels.ViewAGroupViewModel
+
+@{
+    ViewData["Title"] = "ViewGroup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <partial name="_GroupNav" />
+    <div class="col-md-9">
+
+        <partial name="_GroupDetails" />
+
+        @*LEAVE THIS HERE FOR NOW*@
+
+
+        <hr />
+        <div class="text-right mb-2">
+            @if (Model.CurrentUser == Model.Group.GroupAdmin)
+            {
+                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#Delete"> <i class="fas fa-trash-alt"> Delete</i> </button>
+                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#lockUnlock" onclick="Hey()">
+                    @if (Model.Group.isClosed == true)
+                    {<i id="block" class="fas fa-lock-open"> Unlock</i>}
+                    else
+                    {<i id="block" class="fas fa-lock"> Lock</i>}
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#Leave"><i class="fas fa-sign-out-alt">Leave</i></button>
+            }
+        </div>
+
+        <div class="modal fade" id="Leave" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h5 class="modal-title">Are You Sure You want to Leave this Group?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        If you Leave this Group, All the files you sent will still remain available to this group
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Don't!</button>
+                        <a class="btn btn-danger" asp-controller="Group" asp-action="Leave" asp-route-name="@Model.Group.Name">Leave Group</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="lockUnlock" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center">
+                            Are You Sure You want to
+                            @if (Model.Group.isClosed == true)
+                            {<span id="editlock">Unlock this group</span>}
+                            else
+                            {<span id="editlock">Lock this group? If you Lock this Group, No new Member will be able to Join it</span>}
+
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Don't!</button>
+                        <a class="btn btn-danger" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed" data-dismiss="modal" asp-controller="Group" asp-action="Lock" asp-route-name="@Model.Group.Name">
+                            @if (Model.Group.isClosed == true)
+                            {<span id="editlock2">Unlock</span> }
+                            else
+                            {<span id="editlock2">Lock</span>}
+                            Group
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="Delete" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Are You Sure You want to Delete this Group?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        If you Delete this Group, All You Unsent Reminders will be terminated. Your documents will
+                        be deleted. All Group members will be logged out and this group will not exist anymore
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Don't Delete</button>
+                        <a class="btn btn-danger" asp-controller="Group" asp-action="Delete" asp-route-name="@Model.Group.Name">Delete Group</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    @section Scripts{
+
+        <script>
+            var completed = function () {
+                if (document.getElementById("block").className == "fas fa-lock-open")
+                {
+                    document.getElementById("block").className = "fas fa-lock"
+                    document.getElementById("block").innerHTML = "Lock"
+                }
+                else {
+                    document.getElementById("block").className = "fas fa-lock-open"
+                    document.getElementById("block").innerHTML = "Unlock"
+                } 
+            }
+
+            function Hey() {
+                if (document.getElementById("block").className == "fas fa-lock-open") {
+                    document.getElementById("editlock").innerHTML = "Unlock this group?"
+                    document.getElementById("editlock2").textContent = "Unlock"
+
+                }
+                else {
+                    document.getElementById("editlock").innerHTML = "Lock this group? If you Lock this Group, No new Member will be able to Join it"
+                    document.getElementById("editlock2").textContent = "Lock"
+
+                } 
+            }
+        </script>
+    }

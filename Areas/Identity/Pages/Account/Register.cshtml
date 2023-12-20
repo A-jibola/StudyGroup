@@ -1,0 +1,111 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+
+    <div class="">
+        <div class="row">
+            <div class="col-md-8 m-0 p-0">
+                <div id="campaign" class="carousel slide" style="background-color: #276678" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#campaign" data-slide-to="0" class="active"></li>
+                        <li data-target="#campaign" data-slide-to="1"></li>
+                        <li data-target="#campaign" data-slide-to="2"></li>
+                        <li data-target="#campaign" data-slide-to="3"></li>
+                        <li data-target="#campaign" data-slide-to="4"></li>
+                        <li data-target="#campaign" data-slide-to="5"></li>
+
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="~/images/eight.jpg" class="h-100 d-block w-100 opaq" />
+                            <div class="carousel-caption  imagecap w-75">
+                                <h1 class="specialHead" style="font-size:4rem;">StudyGroup</h1>
+                                <p style="font-size:2rem;">Connect and Learn with students from all over the world. </p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/images/one.jpg" class="h-100 w-100 opaq" />
+                            <h1 class="carousel-caption specialHead imagecap w-75" style="font-size:3.5rem;">
+                                Create or Join Your Own
+                                <span class="luci caroStroke d-block" style="color: white; font-size:4rem;">Study Group</span>
+                            </h1>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="~/images/four.jpg" class="h-100 d-block w-100 opaq" />
+                            <h1 class="carousel-caption specialHead imagecap w-75" style="font-size:4rem;">
+                                Communicate with your Group
+                            </h1>
+                        </div>
+                        <div class="carousel-item h-100 w-100">
+                            <img src="~/images/three.jpg" class="h-100 d-block w-100 opaq" />
+                            <h1 class="carousel-caption specialHead imagecap w-75" style="font-size:4rem;">
+                                Send Files to your Study Group
+                            </h1>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/images/six.jpg" class="h-100 d-block w-100 opaq" />
+                            <h1 class="carousel-caption specialHead imagecap w-75" style="font-size:3.7rem;">
+                                Start and Join Group Video And Voice Calls
+                            </h1>
+
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/images/two.jpg" class="h-100 d-block w-100 opaq" />
+                            <h1 class="carousel-caption specialHead imagecap w-75" style="font-size:3.7rem;">
+                                Set Reminders For your Group Meetings
+                            </h1>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4 m-auto text-center">
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <h2 class="specialHead">Register</h2>
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger specialHead"></div>
+                    <div class="form-group">
+                        <input asp-for="Input.Email" class="form-control" placeholder="Email"/>
+                        @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Input.Username" class="form-control" placeholder="Username" />
+                        @*<span asp-validation-for="Input.Username" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <textarea asp-for="Input.Bio" class="form-control" placeholder="Tell Us about Yourself"></textarea>
+                        @*<span asp-validation-for="Input.Bio" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Input.Password" class="form-control" placeholder="Password"/>
+                        @*<span asp-validation-for="Input.Password" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password"/>
+                        @*<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>*@
+                    </div>
+                    <button type="submit" class="btn btn-light btn-outline-primary">Register</button>
+
+                    <div class="mt-4">
+                    <p>
+                        <a class="text-dark" asp-area="Identity" asp-page="/Account/Login">Already A member?</a>
+
+                    </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

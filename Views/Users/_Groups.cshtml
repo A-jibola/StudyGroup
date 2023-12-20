@@ -1,0 +1,49 @@
+﻿@model StudyGroup.ViewModels.UserIndexViewModel
+<div class="p-1 mb-2">
+    <div class="float-right">
+        <a class="btn btn-info" asp-controller="Group" asp-action="Create"><i class="fas fa-plus"></i> <i class="fas fa-users"></i></a>
+        <a class="btn btn-dark" asp-controller="Group" asp-action="ViewGroups"><i class="fas fa-sign-in-alt"> Join</i></a>
+        
+    </div>
+    <div class="container mt-5">
+        @if (Model.Groups.Count() > 0)
+        {
+        <div class="row">
+            @foreach (var group in Model.Groups)
+            {
+                var imageBase64 = Convert.ToBase64String(group.GroupImage);
+                var imagesrc = string.Format("data:image;base64,{0}", imageBase64);
+
+                <div class="card text-center col-md-3">
+                    <div class="card-header">
+                        <img src="@imagesrc" class="card-img-top" width="120" height="100" />
+                        <h3 class="specialHead">@group.Name</h3>
+                    </div>
+                    <div class="card-body">
+                        @if (group.Goal.Count() > 50)
+                        {
+                            <p>Goal: @group.Goal.Substring(0, 50)...</p>
+                        }
+                        else
+                        {
+                            <p>Goal: @group.Goal</p>
+                        }
+                        <a class="btn btn-outline-info" asp-controller="Group" asp-action="ViewGroup" asp-route-name="@group.Name"><i class="fas fa-door-open">Enter</i></a>
+                    </div>
+                </div>
+            }
+
+        </div>
+        }
+        else
+        {
+    <div class="container mt-5 text-center">
+        <h4>
+            It looks like you haven't made or joined any groups Yet. Click the Plus Button above to Create one and the Join button
+            to take a look at all the groups you could join
+        </h4>
+    </div>
+            
+        }
+    </div>
+</div>

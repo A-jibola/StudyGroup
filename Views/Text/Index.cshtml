@@ -1,0 +1,63 @@
+﻿@model StudyGroup.ViewModels.TextMessageViewModel
+
+<div class="row">
+    <partial name="_GroupNav" />
+    <div class=" ml-3 col-md-9 bg-transparent">
+        @if (Model.Texts.Count() > 0)
+        {
+                <div id="messages" style="overflow-y:scroll;  height:55vh" >
+                    @foreach (var text in Model.Texts)
+                    {
+                        if (text.SenderId == Model.CurrentUser)
+                        {
+                            // you sent the text
+                            <p class="p-3 border rounded-lg rounded-top bg-dark text-white offset-md-5 col-md-6 col-8 offset-4">
+                             
+                            @text.Content</p>
+                        }
+                        else
+                        {
+                            //you did not sent the txt
+                            <p class="text-left p-3 border rounded-lg rounded-top col-md-6 col-8" style="background-color:#f6f5f5">@text.SenderName: @text.Content</p>
+                        }
+                    }
+                </div>
+
+        }
+        else
+        {
+            <div id="messages" style="overflow-y:scroll;  height:55vh">
+                 <h4 class="offset-2 col-8 mt-5">
+                It looks like no one in this group has sent a message Yet. Go ahead and say Hello!
+            </h4>
+            </div>
+        }
+        <div class="">
+            <form id="send" method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed" asp-controller="Text" asp-action="Create" asp-route-name="@Model.GroupName">
+            <input asp-for="@Model.GroupName" id="groupname" hidden />
+            <input asp-for="@Model.CurrentUserName" id="username" hidden />
+            <div class="row mt-3 m-2 text-center">
+                <div class="col-8 offset-2">
+                    <textarea class="col-12 form-control" name="newMessage" id="newMessage"></textarea>
+                    <input type="submit" id="sendMessage" class="btn btn-outline-info col-12" value="Send" />
+                </div>
+            </div>
+        </form>
+        </div>
+        
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script src="~/lib/signalR/signalr.js"></script>
+    <script src="~/js/site.js" type="module" asp-append-version="true"></script>
+
+    <script>
+
+        var completed = function () {
+            document.getElementById("newMessage").value = "";
+        }
+    </script>
+}

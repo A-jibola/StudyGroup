@@ -1,0 +1,37 @@
+﻿@model StudyGroup.ViewModels.UserIndexViewModel
+@{ 
+    var groupclass = "";
+    var remclass = "";
+}
+
+<div class="m-5">
+<div class="text-center border m-3 mb-5 p-2">
+
+    <h1 class="specialHead">@Model.Username</h1>
+    <p style="font-family: proza"> @Model.UserBio</p>
+    <a class="btn btn-outline-danger btn-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-user-edit">Edit Profile</i></a>
+</div>
+
+<div class="m-3">
+    @if(Model.PartialName == "_Groups")
+    {
+        groupclass = "btn-dark";
+        remclass = "btn-light";
+    }
+    else if(Model.PartialName == "_Reminders")
+    {
+        remclass = "btn-dark";
+        groupclass = "btn-light";
+    }
+    else
+    {
+        groupclass = "btn-light";
+        remclass = "btn-light";
+
+    }
+    <a class="btn @groupclass mr-2" asp-action="Index" asp-controller="Users" asp-route-filter="Groups"><i class="fas fa-users p-2"></i> Groups</a>
+    <a class="btn @remclass" asp-action="Index" asp-controller="Users" asp-route-filter="Reminder"><i class="material-icons">alarm</i> Reminders</a>
+</div>
+
+<partial name="@Model.PartialName" />
+</div>

@@ -1,0 +1,135 @@
+﻿@model StudyGroup.ViewModels.RemindersListViewModel
+
+<div class="row">
+    <partial name="_GroupNav" />
+
+    @if (Model.Reminders.Count() > 0)
+    {
+<div class="col-9 mt-3">
+    <h2 class="specialHead text-center">@Model.Group.Name's Reminders</h2>
+
+    <table class=" table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th> Subject </th>
+                <th> Time Created</th>
+                <th> Time To Be Sent</th>
+                @if (Model.CurrentUser == Model.GroupAdminID)
+                {
+                    <th></th>
+                    <th></th>
+                }
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var reminder in Model.Reminders)
+            {
+                <tr>
+                    <td>
+                        @if (reminder.Subject.Length > 20)
+                        {
+                            @reminder.Subject.Substring(0, 20)<span>...</span>
+                        }
+                        else
+                        {
+                            @reminder.Subject
+                        }
+                    </td>
+                    <td>@reminder.DateCreated</td>
+                    <td>@reminder.TimeToBeSent</td>
+                    @if (Model.CurrentUser == Model.GroupAdminID)
+                    {
+                        @if (reminder.TimeToBeSent >= DateTime.Now)
+                        {
+                            <td>
+                                <a class="btn btn-light" asp-controller="Reminder" asp-action="Edit" asp-route-id="@reminder.Id"> <i class="fas fa-edit">Edit</i> </a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td> <p class="btn btn-dark disabled"> Sent</p></td>
+                        }
+                        <td>
+                            @{ 
+                                string targetId = "Delete" + reminder.Id;
+                            }
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#@targetId"> <i class="fas fa-trash-alt">Delete</i> </button>
+
+                            <div class="modal fade" id="@targetId" data-backdrop="static" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content text-center">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Are You Sure You want to Delete this Reminder?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            If you Delete this Reminder, It will be terminated.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Don't Delete</button>
+                                            <a class="btn btn-danger" asp-route-id="@reminder.Id" asp-controller="Reminder" asp-action="Delete" > Delete Reminder</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+
+
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+        
+    }
+    else
+    {
+        <div class="col-8 offset-md-2 container m-5 text-center">
+            <h4>
+                It looks like your group doesn't have any Reminders Yet. Click <a class="btn btn-light" asp-controller="Reminder" asp-action="Create" asp-route-name="@Model.Group.Name">Here</a> to Create one!
+            </h4>
+        </div>
+    }
+
+
+
+    @*<div class="col-8">
+            @if (Model.Reminders.Count() > 0)
+            {
+                <ul>
+                    @foreach (var reminder in Model.Reminders)
+                    {
+                        <li>
+                            @reminder.Subject
+                            <div>
+                                <a class="btn btn-dark" asp-controller="Reminder" asp-action="Edit" asp-route-id="@reminder.Id"> Reminder Details</a>
+
+                                @if (Model.CurrentUser == Model.GroupAdminID)
+                                {
+                                    @if (reminder.TimeToBeSent > DateTime.Now)
+                                    {
+                                        <a class="btn btn-warning" asp-controller="Reminder" asp-action="Edit" asp-route-id="@reminder.Id"> Edit Reminder</a>
+                                    }
+                                    <a class="btn btn-danger" asp-controller="Reminder" asp-action="Delete" asp-route-id="@reminder.Id"> Delete Reminder</a>
+
+                                }
+
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+            }
+            else
+            {
+                <p> Oopsie Looks like you don't have any Reminders</p>
+            }
+        </div>*@
+
+</div>
+

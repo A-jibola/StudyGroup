@@ -1,0 +1,63 @@
+﻿@model StudyGroup.ViewModels.CreateReminderViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var colVal = "";
+}
+
+<div class="row">
+
+    @if (Model.GroupId != 0)
+    {
+        <partial name="_GroupNav" />
+
+        colVal = "offset-md-2";
+    }
+    else
+    {
+        colVal = "offset-4";
+    }
+    <div class=" @colVal p-3 col-md-4">
+        <h2 class="text-center"> Create a New Reminder </h2>
+        <form asp-action="CreateReminder" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Reminder.Subject" class="control-label"></label>
+                <input asp-for="Reminder.Subject" required class="form-control" />
+                <span asp-validation-for="Reminder.Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reminder.Message" class="control-label"></label>
+                <textarea asp-for="Reminder.Message" required class="form-control"></textarea>
+                <span asp-validation-for="Reminder.Message" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reminder.TimeToBeSent" class="control-label"></label>
+                <input asp-for="Reminder.TimeToBeSent" type="datetime" id="datetimepicker" class="form-control" />
+                <span asp-validation-for="Reminder.TimeToBeSent" class="text-danger"></span>
+            </div>
+            <input asp-for="GroupId" class="form-control" hidden />
+            @*@if (Model.GroupId != 0)
+                {
+                    <div class="form-group">
+                        <label asp-for="UniqueTag" class="control-label">Enter any Random Word</label>
+                        <input asp-for="UniqueTag" class="form-control" required />
+                    </div>
+                }*@
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+      jQuery('#datetimepicker').datetimepicker();
+    </script>
+
+}
+

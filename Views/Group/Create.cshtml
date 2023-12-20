@@ -1,0 +1,79 @@
+﻿@model StudyGroup.ViewModels.GroupFormViewModel
+
+@{
+    ViewData["Title"] = "Save Group";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var colVal = "";
+    var credit = "";
+}
+
+<div class="row">
+    @if (Model.Group != null && Model.Group.Id != 0)
+    {
+        <partial name="_GroupNav" />
+
+        colVal = "offset-md-2";
+        credit = "Edit This Group";
+    }
+    else
+    {
+        colVal = "offset-md-4";
+        credit = "Create a New Group";
+    }
+<div class=" p-3 @colVal col-md-4">
+    <h2 class="text-center"> @credit</h2>
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.ErrorMessage != null)
+        {
+            <p class="text-danger">@Model.ErrorMessage</p>
+        }
+        <div class="form-group">
+            <label asp-for="Group.Name" class="control-label"></label>
+            <input asp-for="Group.Name" required class="form-control" />
+            <span asp-validation-for="Group.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Group.Goal" class="control-label"></label>
+            <input asp-for="Group.Goal" required class="form-control" />
+            <span asp-validation-for="Group.Goal" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Group.Description" class="control-label"></label>
+            <textarea asp-for="Group.Description" required class="form-control"></textarea>
+            <span asp-validation-for="Group.Description" class="text-danger"></span>
+        </div>
+
+        @if (Model.Group != null && Model.Group.Id != 0)
+        {
+            <a class="btn btn-outline-info btn-light mb-3" data-toggle="collapse" data-target="#GroupImage">Change Group Image</a>
+
+            <div class="form-group collapse" id="GroupImage">
+                <label class="control-label">New Group Image</label>
+                <input type="file" name="GroupImage" class="form-control" />
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label class="control-label">Group Image</label>
+                <input type="file" name="GroupImage" class="form-control" />
+            </div>
+        }
+
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+</div>
+
+@*@if (Model.Group != null && Model.Group.Id !=0)
+{
+    <div>
+        <a asp-action="ViewGroup" asp-controller="Group" asp-route-name="@Model.Group.Name" class="btn btn-outline-warning">Back to List</a>
+    </div>
+}*@
+
+

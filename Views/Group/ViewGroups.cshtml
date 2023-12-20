@@ -1,0 +1,88 @@
+﻿@model StudyGroup.ViewModels.ViewGroupsViewModel
+
+@{
+    ViewData["Title"] = "ViewGroups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.ErrorMessage != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Sorry!</strong> @Model.ErrorMessage
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="row">
+    @if (Model.Groups.Count() > 0)
+    {
+        @foreach (var group in Model.Groups)
+        {
+            var imageBase64 = Convert.ToBase64String(group.GroupImage);
+            var imagesrc = string.Format("data:image;base64,{0}", imageBase64);
+
+            <div class="card text-center col-md-4 col-sm-8">
+                <div class="card-header">
+                    <img src="@imagesrc" class="card-img-top" style="width:16vw;height:24vh;" />
+                    <h3 class="specialHead">@group.Name</h3>
+                </div>
+                <div class="card-body">
+                     
+                    @if (group.Goal.Count() > 50)
+                    {
+                    <p>Goal: @group.Goal.Substring(0,50)...</p>
+                    }
+                    else
+                    {
+                    <p>Goal: @group.Goal</p>
+                    }
+                  
+                    @{
+                        var DetailsId = "Details" + group.Id;
+                    }
+                    <button class="btn btn-primary" style="background-color:#1687a7" data-toggle="modal" data-target="#@DetailsId"> Details </button>
+
+                    <div class="modal fade" id="@DetailsId" data-backdrop="static" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">@group.Name</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><span class="font-weight-bold">Goal: </span>@group.Goal</li>
+                                        <li class="list-group-item">@group.Description</li>
+                                        <li class="list-group-item"><span class="font-weight-bold">Admin: </span>@group.User.UserName</li>
+
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Don't Join</button>
+                                    <a class="btn btn-primary" style="background-color:#1687a7" asp-controller="Group" asp-action="JoinGroup" asp-route-id="@group.Id">Join</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="container">
+            <h5>
+                There are no Available groups right now. Click <a class="btn btn-light" asp-controller="Group" asp-action="Create">Here</a> to Make one
+            </h5>
+        </div>
+    }
+
+
+</div>
+
+
+

@@ -1,0 +1,127 @@
+﻿@model StudyGroup.ViewModels.CallViewModel
+
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://kit.fontawesome.com/31b09a473e.js" crossorigin="anonymous"></script>
+    <title>@Model.GroupName Video Call</title>
+</head>
+<body class="container-fluid">
+    <h1 id="groupName" hidden>@Model.GroupId</h1>
+    <h1 id="usersname" hidden>@Model.Username</h1>
+
+    <div class="row h-50" style="flex-wrap:nowrap; overflow-x:scroll;" id="Others">
+
+    </div>
+
+    <div class="fixed-bottom">
+        <div class="text-center m-auto" id="Main">
+        </div>
+        <div class="row m-1 p-2 bg-dark">
+            <button class="col m-md-4 m-2 btn btn-outline-info" id="VideoButton" onclick="StopVideo()"><i class="fas fa-video-slash"></i></button>
+            <button class="col m-md-4 m-2 btn btn-outline-info" id="VoiceButton" onclick="StopVoice()"><i class="fas fa-phone-slash"></i></button>
+            <button class="col m-md-4 m-2 btn btn-outline-info" id="ScreenButton" onclick="ShareScreen()"><i class="material-icons">screen_share</i></button>
+            <a class="col m-md-4 btn m-2 btn-outline-danger" id="Leave" asp-controller="Group" asp-action="ViewGroup" asp-route-name="@Model.GroupName"><i class="material-icons">logout</i><i class="specialHead">Leave Call</i></a>
+            @if (Model.GroupAdminId == Model.CurrentUser)
+            {
+                <button class="col m-md-4 m-2 btn btn-outline-danger" data-toggle="modal" data-target="#Delete"> <i class="material-icons">missed_video_call</i> <i class="specialHead">End Call</i> </button>
+            }
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="Delete" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are You Sure You want to End this Call?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    The call will be ended for everyone in your group
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-secondary" id="EndCall" data-dismiss="modal" asp-controller="Group" asp-action="ViewGroup" asp-route-name="@Model.GroupName" onclick="EndCall()"> End Call</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/openvidu-browser-2.17.0.js"></script>
+    <script src="~/js/VideoApp.js"></script>
+</body>
+</html>
+
+
+
+
+<div>
+    @*<a class="d-block p-3 nav-link hovhov font-weight-bolder" asp-controller="Group" asp-action="ViewGroup" asp-route-name="@Model.GroupName">
+            <span class="text-center font-weight-bold text-dark" id="groupName">Return to DashBoard?</span>
+        </a>
+
+        @if (Model.GroupAdminId == Model.CurrentUser)
+        {
+            <a class=" btn btn-outline-danger" data-toggle="modal" data-target="#endCall">
+               End The Call?
+            </a>
+            <div class="modal fade" id="endCall" data-backdrop="static" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Are You Sure You want to End this Call?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            The call will be ended for everyone in your group
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-secondary" id="EndCall" data-dismiss="modal" asp-controller="Group" asp-action="ViewGroup" asp-route-name="@Model.GroupName" onclick="EndCall()"> End Call</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        GONNEEEEEE
+
+        <div class="session">
+            <div class="card-columns">
+                <div class="card">
+                    <div class="card-header">You: @Model.Username</div>
+                    <div class="card-body" id="You">
+
+                    </div>
+                    <div class="card-footer row">
+                        <button class="col-sm-12 col-md-3 btn btn-outline-danger" id="VideoButton" onclick="StopVideo()">StopVideo</button>
+                        <button class="col-sm-12 offset-md-1 col-md-3 btn btn-outline-danger" id="VoiceButton" onclick="StopVoice()">StopVoice</button>
+                        <button class="col-sm-12 offset-md-1 col-md-3 btn btn-outline-dark" id="ScreenButton" onclick="ShareScreen()">ShareScreen</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Others" class="card">Others</div>
+        </div>*@
+</div>
+
+@section Scripts {
+    
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,177 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+--------------------------------------------------  SPECIAL CHANGES START*/
+
+html {
+    font-size: 14px;
+    font-family: Roboto,sans-serif
+}
+a.hovhov:hover {
+    color: white !important;
+    background-color: #1687a7;
+    border-radius: 10px;
+}
+
+.hovhov {
+    border-radius: 10px;
+}
+
+.hovhov.clicked{
+    background-color: #f6f5f5;
+}
+
+.specialHead{
+    font-family: proza, serif !important;
+    font-weight: 800;
+}
+
+.imagecap{
+    top: 30%;
+    bottom: 50%
+}
+
+.caroStroke {
+    -webkit-text-stroke-width: 0.4px;
+    -webkit-text-stroke-color: #1687a7;
+}
+
+.opaq{
+    opacity: 0.8;
+}
+
+.luci{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+@font-face {
+    font-family: 'proza';
+    src: url('Proza-Regular.otf');
+}
+
+.movDiv {
+    position: relative;
+    width: 0;
+    height: 0;
+}
+
+.movTxt {
+    position: absolute;
+    left: -220px;
+    bottom: -240px;
+    color: white;
+    background-color: #1687a7;
+
+}
+.movImg {
+    position: absolute;
+    left: -2px;
+    bottom: -238px;
+    width: 60px;
+    height: 60px;
+}
+.movDivImg {
+    position: relative;
+}
+.movImg2 {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: -100px;
+}
+
+.movTxt2 {
+    position: absolute;
+    left: -220px;
+    bottom: -160px;
+    color: white;
+}
+#General video {
+    width: 240px !important;
+    height: 160px !important;
+    opacity: 0.7;
+    margin: 2vw;
+}
+
+
+/* SPECIAL CHANGES END*/
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/*@media screen and (max-width: 400px) {
+    #Others video {
+        width: 240px !important;
+        height: 160px !important;
+    }
+}*/
+
+@media screen and (min-width:1200px) {
+    .collapse div {
+        flex-direction: column !important;
+    }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: #d3e0ea;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+

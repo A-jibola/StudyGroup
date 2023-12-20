@@ -1,0 +1,126 @@
+﻿@model StudyGroup.ViewModels.DocumentDetailsViewModel
+
+<div class="row">
+    <partial name="_GroupNav" />
+    <div class="col-md-9 col-sm-11 m-3">
+        <h2 class="specialHead text-center">@Model.Group.Name's Documents</h2>
+
+        @if (Model.Documents.Count() > 0)
+        {
+            <table class="table table-bordered table-striped ">
+                <thead class="thead-dark">
+                    <tr>
+                        <th> Name </th>
+                        <th> Description </th>
+                        <th> Time Sent</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var document in Model.Documents)
+                    {
+                        <tr>
+                            <td>
+                                @if (document.Name.Length > 20)
+                                {
+                                    @document.Name.Substring(0, 20)<span>...</span>
+                                }
+                                else
+                                {
+                                    @document.Name
+                                }
+                            </td>
+                            <td>
+                                @if (document.Description.Length > 250)
+                                {
+                                    @document.Description.Substring(0, 250) <span>...</span>
+                                }
+                                else
+                                {
+                                    @document.Description
+                                }
+                            </td>
+                            <td> @document.DateSent</td>
+                            @if (Model.CurrentUser == document.SenderId || Model.CurrentUser == Model.GroupAdmin)
+                            {
+                                <td>
+                                    <a class="btn btn-light" asp-controller="Document" asp-action="Create" asp-route-id="@document.GroupId" asp-route-documentId="@document.Id"><i class="fas fa-edit">Edit</i></a>
+                                </td>
+                                <td>
+                                    @{ 
+                                        var DeleteTarget = "DELETE" + document.Id;
+                                    }
+                                    <button class="btn btn-danger" data-toggle="modal" data-target="#@DeleteTarget"> <i class="fas fa-trash-alt">Delete</i> </button>
+
+                                    <div class="modal fade" id="@DeleteTarget" data-backdrop="static" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content text-center">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Are You Sure You want to Delete this File?</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    If you Delete this File, It will be no longer available to the group.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Don't Delete</button>
+                                                    <a class="btn btn-danger" asp-controller="Document" asp-action="Delete" asp-route-id="@document.Id" asp-route-group="@document.GroupId"> Delete file</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            }
+                            <td><a class="btn btn-dark" asp-controller="Document" asp-action="Download" asp-route-id="@document.Id" asp-route-group="@document.GroupId"> <i class="fas fa-download"> Download</i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="col-8 container m-5 text-center">
+                <h4>
+                    It looks like your group doesn't have any Files Yet. Click <a class="btn btn-light" asp-controller="Document" asp-action="Create" asp-route-id="@Model.Group.Id">Here</a> to Send one!
+                </h4>
+            </div>
+        }
+    </div>
+
+
+
+    @*<div class="col-8">
+            @if (Model.Documents.Count() > 0)
+            {
+                <ul>
+                    @foreach (var document in Model.Documents)
+                    {
+                        <li>
+                            @document.Name
+                            <div>
+                                <a class="btn btn-dark" asp-controller="Document" asp-action="Download" asp-route-id="@document.Id" asp-route-group="@document.GroupId"> Download file</a>
+
+                                @if (Model.CurrentUser == document.SenderId || Model.CurrentUser == Model.GroupAdmin)
+                                {
+                                    <a class="btn btn-warning" asp-controller="Document" asp-action="Create" asp-route-id="@document.GroupId" asp-route-documentId="@document.Id"> Edit file</a>
+                                    <a class="btn btn-danger" asp-controller="Document" asp-action="Delete" asp-route-id="@document.Id" asp-route-group="@document.GroupId"> Delete file</a>
+
+                                }
+
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+            }
+            else
+            {
+                <p> Oopsie Looks like you don't have any document</p>
+            }
+        </div>*@
+</div>
+

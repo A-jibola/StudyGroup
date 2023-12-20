@@ -1,0 +1,72 @@
+﻿@model StudyGroup.ViewModels.ReminderDetailsViewModel
+
+@{
+    ViewData["Title"] = "Edit Reminder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var colVal = "";
+}
+
+
+<div class="row">
+    @if (Model.Reminder.GroupId != null && Model.Reminder.GroupId != 0)
+    {
+        <partial name="_GroupNav" />
+        colVal = "offset-3";
+    }
+    else
+    {
+        colVal = "offset-4";
+    }
+
+    <div class="col-md-4 @colVal">
+        <h4 class="text-center"> Edit Reminder</h4>
+        <hr />
+        @if (Model.ErrorMessage != null)
+        {
+            <p class="text-danger">@Model.ErrorMessage</p>
+        }
+        <form asp-action="EditReminder" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Reminder.Subject" class="control-label"></label>
+                <input asp-for="Reminder.Subject" required class="form-control" />
+                <span asp-validation-for="Reminder.Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reminder.Message" class="control-label"></label>
+                <textarea asp-for="Reminder.Message" required class="form-control"></textarea>
+                <span asp-validation-for="Reminder.Message" class="text-danger"></span>
+            </div>
+
+            <a class="btn btn-outline-info btn-light mb-3" data-toggle="collapse" data-target="#RemTime">Change Reminder Time</a>
+
+            <div class="form-group collapse" id="RemTime">
+                <label asp-for="Reminder.TimeToBeSent" class="control-label"></label>
+                <input asp-for="Reminder.TimeToBeSent" id="datetimepicker" class="form-control" />
+                <span asp-validation-for="Reminder.TimeToBeSent"  class="text-danger"></span>
+            </div>
+            <input asp-for="Reminder.Id" class="form-control" hidden />
+
+            @if (Model.Reminder.GroupId != 0 || Model.Reminder.GroupId != null)
+            {
+                <input asp-for="Reminder.GroupId" class="form-control" hidden />
+                <input asp-for="Reminder.UniqueTag" class="form-control" hidden />
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        jQuery('#datetimepicker').datetimepicker();
+
+    </script>
+
+}
+
